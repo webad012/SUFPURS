@@ -20,5 +20,3 @@ catch(\Exception $e)
 {
     exit($e->getMessage());
 }
-
-echo 'test';
