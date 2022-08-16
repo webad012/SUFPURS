@@ -216,6 +216,11 @@ class SuFPURS
                 $result[] = 'car';
                 $result[] = 'gass';
             }
+            else if($this->str_contains($article['name'], 'program Top'))
+            {
+                $result[] = 'car';
+                $result[] = 'wash';
+            }
         }
         else if($shop === 'dm drogerie markt')
         {
