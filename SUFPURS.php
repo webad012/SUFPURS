@@ -16,7 +16,7 @@ class SuFPURS
     public function run()
     {
         $this->validateUrl();
-        $this->fetFromUrl();
+        $this->getDataFromUrl();
         $this->parseOriginalData();
     }
 
@@ -33,13 +33,16 @@ class SuFPURS
         }
     }
 
-    private function fetFromUrl()
+    private function getDataFromUrl()
     {
-        /**
-         * unable to perform successfull fetch using
-         * curl or file_get_contents
-         */
-        $this->_original_data = shell_exec('curl '.$this->_url.' 2>&1');
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->_url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36'
+        ]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $this->_original_data = curl_exec($ch);
+        curl_close($ch);
 
         if(strpos($this->_original_data, 'Рачун је проверен') === false)
         {
